@@ -26,12 +26,12 @@ def region_of_interest(img, vertices, color3=(255,255,255), color1=255): # ROI �
     ROI_image = cv2.bitwise_and(img, mask)
     return ROI_image
 
-def draw_lines(img, lines, color=[255, 0, 0], thickness=2): # 선 그리기
+def draw_lines(img, lines, color=[0, 0, 255], thickness=2): # 선 그리기
     for line in lines:
         for x1,y1,x2,y2 in line:
             cv2.line(img, (x1, y1), (x2, y2), color, thickness)
 
-def draw_fit_line(img, lines, color=[255, 0, 0], thickness=10): # 대표선 그리기
+def draw_fit_line(img, lines, color=[0, 0, 255], thickness=10): # 대표선 그리기
         cv2.line(img, (lines[0], lines[1]), (lines[2], lines[3]), color, thickness)
 
 def hough_lines(img, rho, theta, threshold, min_line_len, max_line_gap): # 허프 변환
@@ -57,7 +57,6 @@ def get_fitline(img, f_lines): # 대표선 구하기
     return result
 
 image = cv2.imread('c:\lineTest.bmp') # 이미지 읽기
-
 height, width = image.shape[:2] # 이미지 높이, 너비
 
 gray_img = grayscale(image) # 흑백이미지로 변환
@@ -70,7 +69,7 @@ vertices = np.array([[(50,height),(width/2-45, height/2+60), (width/2+45, height
 ROI_img = region_of_interest(canny_img, vertices) # ROI 설정
 
 line_arr = hough_lines(ROI_img, 1, 1 * np.pi/180, 30, 10, 20) # 허프 변환
-line_arr = np.squeeze(line_arr)
+line_arr = np.squeeze(line_arr) #size가 1인것을 찾아 스칼라값으로 바꾸어 자른다
 
 # 기울기 구하기
 slope_degree = (np.arctan2(line_arr[:,1] - line_arr[:,3], line_arr[:,0] - line_arr[:,2]) * 180) / np.pi
@@ -92,6 +91,7 @@ right_fit_line = get_fitline(image,R_lines)
 draw_fit_line(temp, left_fit_line)
 draw_fit_line(temp, right_fit_line)
 
-result = weighted_img(temp, image) # 원본 이미지에 검출된 선 overlap
+result = weighted_img(temp, temp) # 원본 이미지에 검출된 선 overlap
+cv2.imshow('base',image)
 cv2.imshow('result',result) # 결과 이미지 출력
 cv2.waitKey(0)
