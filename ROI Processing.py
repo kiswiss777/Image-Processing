@@ -17,7 +17,7 @@ def process_image(image_array):
     processed_image = roi(processed_image, [vertices])
     return processed_image
 
-image = cv2.imread('c:\lineTest.bmp') # 이미지 읽기
+image = cv2.imread('c:\CrossWalk.bmp') # 이미지 읽기
 mark = process_image(image);
 
 cv2.imshow('roi_white',mark) # 흰색 차선 추출 결과 출력
