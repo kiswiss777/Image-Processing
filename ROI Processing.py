@@ -13,7 +13,7 @@ def process_image(image_array):
     #edge detection
     processed_image = cv2.Canny(processed_image, threshold1 = 200, threshold2=300) # 경계값 설정 흰색선으로 하는게 좋을 듯
     #roi
-    vertices = np.array([[10,500],[10,300],[300,200],[500,200],[800,300],[800,500],], np.int32)#영역설정
+    vertices = np.array([[10,500],[10,300],[300,200],[500,200],[800,300],[800,500],], np.int32)#영역설정 꼭짓점 여러개 하면 더 세세하게 가능
     processed_image = roi(processed_image, [vertices])
     return processed_image
 
