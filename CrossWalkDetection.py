@@ -36,6 +36,8 @@ class SW_Detector:
             approx = cv2.approxPolyDP(cnt,0.01*cv2.arcLength(cnt,True),True)
             x = approx.ravel()[0]
             y = approx.ravel()[1]
+            #area = contours[count]
+            #print(x,y)
             if len(approx) == 4:
                 count+=1
 
