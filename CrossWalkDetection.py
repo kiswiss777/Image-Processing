@@ -4,7 +4,7 @@ import numpy as np
 
 class SW_Detector:
     image = 0
-    processed_image = 0
+    processed_image = 0 # 처리된 이미지
     def __init__(self,image): # 클래스 생성자
         self.image = image
     def get_processed_image(self): # 이미지 처리된거
